@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Анна Богословская](https://up.htmlacademy.ru/javascript/29/user/979743).
-* Наставник: `Сергей Остаповец`.
+* Наставник: `Сергей Остаповец https://htmlacademy.ru/profile/seraphim`.
 
 ---
 
