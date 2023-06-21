@@ -1,10 +1,18 @@
-// Константы из ТЗ
+// Константы из ТЗ - объединить в коробочки
 const PHOTOS_COUNT = 25;
-const MIN_LIKES_COUNT = 15;
-const MAX_LIKES_COUNT = 200;
-const MAX_COMMENTS_COUNT = 30;
-const MIN_AVATAR_NUMBER = 1;
-const MAX_AVATAR_NUMBER = 6;
+const LIKES_COUNT = {
+  min: 15,
+  max: 200,
+};
+const COMMENTS_COUNT = {
+  min: 0,
+  max: 30,
+};
+
+const AVATAR_NUMBER = {
+  min: 1,
+  max: 6,
+};
 
 // моки
 const descriptions = [
@@ -12,6 +20,11 @@ const descriptions = [
   'черное море, белый мерседес',
   'еще какое-нибудь описание',
   'надо придумать что-нибудь еще',
+  'белка на айсберге',
+  'чебурашка и крокодил Гена',
+  'кот Леопольд',
+  'Чертенок №13',
+  'домовенок Кузя',
   'фантазия кончилась',
 ];
 
@@ -26,9 +39,6 @@ const messages = [
 
 const authorsNames = ['Ваня', 'Аня', 'Петя', 'Коля', 'Маша', 'Катя', 'Саша'];
 
-// массивы для проверки на уникальность идентификаторов
-// ничего лучше, чем через глобальную переменую, я не придумала
-
 // вспомогательные функции
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -37,41 +47,41 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-function getRandomArrayElement(elements) {
+const getRandomArrayElement = (elements) => {
   return elements[getRandomInteger(0, elements.length - 1)];
-}
+};
 
-function uploadComment() {
-  // как-бы подгружаем с сервера 1 комментарий
+const uploadComment = (commentId) => {
+  // создаем 1 комментарий, id по порядку
   return (photoComment = {
-    id: getRandomInteger(1, 1000), //макс значение как определить + проверка на уникальность
-    avatar: `img/avatar-${getRandomInteger(1, MAX_AVATAR_NUMBER)}.svg`,
+    id: commentId,
+    avatar: `img/avatar-${getRandomInteger(
+      AVATAR_NUMBER.min,
+      AVATAR_NUMBER.max
+    )}.svg`,
     message: getRandomArrayElement(messages),
     name: getRandomArrayElement(authorsNames),
   });
-}
+};
 
-// основная функция
-function createPhoto() {
-  // сохраним данные в константах
-  const photoId = getRandomInteger(1, PHOTOS_COUNT);
-  const photoUrl = `photos/${photoId}.jpg`;
-  const photoDescription = getRandomArrayElement(descriptions);
-  const photoLikes = getRandomInteger(MIN_LIKES_COUNT, MAX_LIKES_COUNT);
+// основная функция - создаем 1 объект фото
+const createPhoto = (photoId) => {
   const photoComments = Array.from(
-    { length: getRandomInteger(0, MAX_COMMENTS_COUNT) },
-    uploadComment
+    { length: getRandomInteger(COMMENTS_COUNT.min, COMMENTS_COUNT.max) },
+    (_, index) => uploadComment(index + 1)
   ); // размножаем коммнтарии к фото
 
   // возвращаем 1 объект фото
   return (photo = {
-    id: photoId, // число от 1 до 25 + проверка на уникальность
-    url: photoUrl, // имя файла совпадает с id + придумать, как получить доступ к другому свойству объекта
-    description: photoDescription, // случайный элемент из массива descriptions
-    likes: photoLikes, // случайное число от 15 до 200
+    id: photoId, // число от 1 до 25
+    url: `photos/${photoId}.jpg`, // имя файла совпадает с id
+    description: getRandomArrayElement(descriptions), // случайный элемент из массива descriptions
+    likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max), // случайное число от 15 до 200
     comments: photoComments,
   });
-}
+};
 
-const allPhotos = Array.from({ length: 5 }, createPhoto);
+const allPhotos = Array.from({ length: PHOTOS_COUNT }, (_, index) =>
+  createPhoto(index + 1)
+);
 console.log(allPhotos);
