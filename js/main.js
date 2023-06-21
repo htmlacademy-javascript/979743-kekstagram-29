@@ -1,4 +1,4 @@
-// Константы из ТЗ - объединить в коробочки
+// Константы из ТЗ
 const PHOTOS_COUNT = 25;
 const LIKES_COUNT = {
   min: 15,
@@ -47,13 +47,24 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) => {
-  return elements[getRandomInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) =>
+  elements[getRandomInteger(0, elements.length - 1)];
+
+const createIdGenerator = () => {
+  let lastGeneratedId = 0;
+  return function () {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
 };
 
-const uploadComment = (commentId) => {
+const generateCommentId = createIdGenerator(); // запускаем генератор id для комментов, нумерация сквозная
+
+const uploadComment = () => {
   // создаем 1 комментарий, id по порядку
-  return (photoComment = {
+  const commentId = generateCommentId();
+
+  return {
     id: commentId,
     avatar: `img/avatar-${getRandomInteger(
       AVATAR_NUMBER.min,
@@ -61,27 +72,32 @@ const uploadComment = (commentId) => {
     )}.svg`,
     message: getRandomArrayElement(messages),
     name: getRandomArrayElement(authorsNames),
-  });
+  };
 };
 
 // основная функция - создаем 1 объект фото
 const createPhoto = (photoId) => {
+  // размножаем коммнтарии к фото
   const photoComments = Array.from(
     { length: getRandomInteger(COMMENTS_COUNT.min, COMMENTS_COUNT.max) },
-    (_, index) => uploadComment(index + 1)
-  ); // размножаем коммнтарии к фото
+    uploadComment
+  );
 
   // возвращаем 1 объект фото
-  return (photo = {
+  return {
     id: photoId, // число от 1 до 25
     url: `photos/${photoId}.jpg`, // имя файла совпадает с id
     description: getRandomArrayElement(descriptions), // случайный элемент из массива descriptions
     likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max), // случайное число от 15 до 200
     comments: photoComments,
-  });
+  };
 };
 
-const allPhotos = Array.from({ length: PHOTOS_COUNT }, (_, index) =>
-  createPhoto(index + 1)
-);
-console.log(allPhotos);
+const createAllPhotos = () => {
+  const allPhotos = Array.from({ length: PHOTOS_COUNT }, (_, index) =>
+    createPhoto(index + 1)
+  );
+  return allPhotos;
+};
+createAllPhotos();
+//console.log(createAllPhotos());
