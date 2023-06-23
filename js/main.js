@@ -63,6 +63,15 @@ const generateCommentId = createIdGenerator(); // запускаем генер�
 const uploadComment = () => {
   // создаем 1 комментарий, id по порядку
   const commentId = generateCommentId();
+  const newmessage = Array.from({ length: getRandomInteger(1, 2) }, () =>
+    getRandomArrayElement(messages)
+  );
+  // исключаем повторы предложений, если их два
+  if (newmessage.length === 2 && newmessage[0] === newmessage[1]) {
+    while (newmessage[0] === newmessage[1]) {
+      newmessage[1] = getRandomArrayElement(messages);
+    }
+  }
 
   return {
     id: commentId,
@@ -70,34 +79,27 @@ const uploadComment = () => {
       AVATAR_NUMBER.min,
       AVATAR_NUMBER.max
     )}.svg`,
-    message: getRandomArrayElement(messages),
+    message: newmessage.join(' '),
     name: getRandomArrayElement(authorsNames),
   };
 };
-
+const getPhotoFileName = (id) => `photos/${id}.jpg`;
 // основная функция - создаем 1 объект фото
-const createPhoto = (photoId) => {
-  // размножаем коммнтарии к фото
-  const photoComments = Array.from(
-    { length: getRandomInteger(COMMENTS_COUNT.min, COMMENTS_COUNT.max) },
-    uploadComment
-  );
-
+const createPhoto = (photoId) =>
   // возвращаем 1 объект фото
-  return {
+  ({
     id: photoId, // число от 1 до 25
-    url: `photos/${photoId}.jpg`, // имя файла совпадает с id
+    url: getPhotoFileName(photoId), // имя файла совпадает с id
     description: getRandomArrayElement(descriptions), // случайный элемент из массива descriptions
     likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max), // случайное число от 15 до 200
-    comments: photoComments,
-  };
-};
+    comments: Array.from(
+      { length: getRandomInteger(COMMENTS_COUNT.min, COMMENTS_COUNT.max) },
+      uploadComment
+    ),
+  });
 
-const createAllPhotos = () => {
-  const allPhotos = Array.from({ length: PHOTOS_COUNT }, (_, index) =>
-    createPhoto(index + 1)
-  );
-  return allPhotos;
-};
+const createAllPhotos = () =>
+  Array.from({ length: PHOTOS_COUNT }, (_, index) => createPhoto(index + 1));
+
 createAllPhotos();
 //console.log(createAllPhotos());
