@@ -82,5 +82,5 @@ const isMeetengInWorkingDay = (
     return false;
   }
 };
-
+isMeetengInWorkingDay();
 //console.log(isMeetengInWorkingDay('8:0', '10:0', '8:0', 120));
