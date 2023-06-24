@@ -51,7 +51,7 @@ const getMeetingEnd = (meetingStart, meetingDuration) => {
     meetingEnd.minutes = meetingEnd.minutes - 60;
   }
   //return meetingEnd.join(':'); // возвращаем строку
-  return String(meetingEnd.hours) + ':' + String(meetingEnd.minutes); // возвращаем строку
+  return `${String(meetingEnd.hours)}:${String(meetingEnd.minutes)}`; // возвращаем строку
 };
 
 //console.log('getMeetingEnd - ', getMeetingEnd('14:15', 50));
@@ -82,5 +82,5 @@ const isMeetengInWorkingDay = (
     return false;
   }
 };
-isMeetengInWorkingDay();
-//console.log(isMeetengInWorkingDay('8:0', '10:0', '8:0', 120));
+isMeetengInWorkingDay('8:0', '10:0', '8:0', 120);
+//console.log(isMeetengInWorkingDay('8:00', '17:30', '08:00', 900));
