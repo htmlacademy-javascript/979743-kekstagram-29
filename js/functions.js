@@ -18,25 +18,20 @@ const compareTime = (timeStr1, timeStr2) => {
     return false;
   } else if (time1.hours < time2.hours) {
     return true;
-  } //else if (time1.hours === time2.hours) {
-  //}
+  }
   // теперь сравниваем минуты
   if (time1.minutes > time2.minutes) {
     return false;
-  } else if (time1.minutes < time2.minutes) {
-    return true;
-  } else if (time1.minutes === time2.minutes) {
+  } else if (time1.minutes <= time2.minutes) {
     return true;
   }
 };
 
-const formatMeetingDuraion = (minutes) => {
+const formatMeetingDuraion = (minutes) => ({
   //превращаем минуты в массив чисел: часы и минуты
-  const meetingDuration = {};
-  meetingDuration.hours = Math.trunc(minutes / 60);
-  meetingDuration.minutes = minutes % 60;
-  return meetingDuration;
-};
+  hours: Math.trunc(minutes / 60),
+  minutes: minutes % 60,
+});
 
 const getMeetingEnd = (meetingStart, meetingDuration) => {
   // формируем время окончания встречи
@@ -50,37 +45,26 @@ const getMeetingEnd = (meetingStart, meetingDuration) => {
     meetingEnd.hours += 1;
     meetingEnd.minutes = meetingEnd.minutes - 60;
   }
-  //return meetingEnd.join(':'); // возвращаем строку
   return `${String(meetingEnd.hours)}:${String(meetingEnd.minutes)}`; // возвращаем строку
 };
 
-//console.log('getMeetingEnd - ', getMeetingEnd('14:15', 50));
-
-// оновная функция
 const isMeetengInWorkingDay = (
   workingStart,
   workingEnd,
   meetingStart,
   meetingDuration
 ) => {
-  // workingStart, workingEnd - string 08:05, 8:5, 08:5, 8:05
-  // meetingDuration - number, minutes
   //проверяем, попадает ли время начала встречи в рабочий день
-  if (compareTime(workingStart, meetingStart)) {
-    //console.log('начало встречи в рабочее время');
-  } else {
-    //console.log('начало встречи раньше начала рабочего дня');
+  if (!compareTime(workingStart, meetingStart)) {
     return false;
   }
   const meetingEnd = getMeetingEnd(meetingStart, meetingDuration);
   //проверяем, укаладывается ли время окончания встречи в рабочий день
-  if (compareTime(meetingEnd, workingEnd)) {
-    //console.log('встреча закончилась в рабочее время');
-    return true;
-  } else {
-    //console.log('встреча закончилась позже окончания рабочиего дня');
-    return false;
-  }
+  return compareTime(meetingEnd, workingEnd);
 };
 isMeetengInWorkingDay('8:0', '10:0', '8:0', 120);
-//console.log(isMeetengInWorkingDay('8:00', '17:30', '08:00', 900));
+// console.log(isMeetengInWorkingDay('08:00', '17:30', '14:00', 90)); // true
+// console.log(isMeetengInWorkingDay('8:0', '10:0', '8:0', 120)); // true
+// console.log(isMeetengInWorkingDay('08:00', '14:30', '14:00', 90)); // false
+// console.log(isMeetengInWorkingDay('14:00', '17:30', '08:0', 90)); // false
+// console.log(isMeetengInWorkingDay('8:00', '17:30', '08:00', 900)); // false
