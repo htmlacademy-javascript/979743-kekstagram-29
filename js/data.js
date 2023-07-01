@@ -9,7 +9,7 @@ import {
   LIKES_COUNT,
   COMMENTS_COUNT,
   AVATAR_NUMBER,
-} from './consts.js';
+} from './enums.js';
 
 import { descriptions, messages, authorsNames } from './mocks.js';
 
@@ -40,18 +40,17 @@ const uploadComment = () => {
 };
 const getPhotoFileName = (id) => `photos/${id}.jpg`;
 // основная функция - создаем 1 объект фото
-const createPhoto = (photoId) =>
-  // возвращаем 1 объект фото
-  ({
-    id: photoId, // число от 1 до 25
-    url: getPhotoFileName(photoId), // имя файла совпадает с id
-    description: getRandomArrayElement(descriptions), // случайный элемент из массива descriptions
-    likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max), // случайное число от 15 до 200
-    comments: Array.from(
-      { length: getRandomInteger(COMMENTS_COUNT.min, COMMENTS_COUNT.max) },
-      uploadComment
-    ),
-  });
+// возвращаем 1 объект фото
+const createPhoto = (photoId) => ({
+  id: photoId, // число от 1 до 25
+  url: getPhotoFileName(photoId), // имя файла совпадает с id
+  description: getRandomArrayElement(descriptions), // случайный элемент из массива descriptions
+  likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max), // случайное число от 15 до 200
+  comments: Array.from(
+    { length: getRandomInteger(COMMENTS_COUNT.min, COMMENTS_COUNT.max) },
+    uploadComment
+  ),
+});
 
 const createAllPhotos = () =>
   Array.from({ length: PHOTOS_COUNT }, (_, index) => createPhoto(index + 1));
