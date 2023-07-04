@@ -1,4 +1,4 @@
-//манипуляции с данными. Возврат данных для отрисовки. Потом его заменит модуль загрузки данных с сервера или модуль рендеринга
+//манипуляции с данными. Возвращает данные для отрисовки. Потом его заменит модуль загрузки данных с сервера
 import {
   getRandomInteger,
   getRandomArrayElement,
@@ -52,7 +52,8 @@ const createPhoto = (photoId) => ({
   ),
 });
 
-const createAllPhotos = () =>
+const createAllPhotosData = () =>
+  //потом переименовать в uploadAllPhotosData
   Array.from({ length: PHOTOS_COUNT }, (_, index) => createPhoto(index + 1));
 
-export { createAllPhotos };
+export { createAllPhotosData };
