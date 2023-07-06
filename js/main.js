@@ -1,12 +1,7 @@
 // точка входа. подключен в index.html
-import { createAllPhotosData } from './data.js'; //получаем массив из 25 объектов
+import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
 import { renderThumbnails } from './render-thumbnails.js';
-
-const allPhotosData = createAllPhotosData(); // сгенерировали данные -> получили с сервера
-//функцию генерации данных нужно выззывать только 1 раз. т.к. каждый вызов создает новый комплект данных.
-//т.к. если мы будем использовать эти данные для чего-то еще, это должны быть те же самые данные.
-//поэому сохраняем их в константу. Потом данные будут приходить с сервера и они будут статичные?
+//import { showFullPhoto } from './full-photo.js';
 
 renderThumbnails(allPhotosData); // отдали данные на отрисовку
-
-//вопросы:
+//showFullPhoto(allPhotosData);
