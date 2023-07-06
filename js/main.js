@@ -1,6 +1,7 @@
 // точка входа. подключен в index.html
+import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
+import { renderThumbnails } from './render-thumbnails.js';
+//import { showFullPhoto } from './full-photo.js';
 
-import { createAllPhotos } from './data.js';
-
-createAllPhotos();
-//console.log(createAllPhotos());
+renderThumbnails(allPhotosData); // отдали данные на отрисовку
+//showFullPhoto(allPhotosData);
