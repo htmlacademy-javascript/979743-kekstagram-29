@@ -12,47 +12,77 @@ const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption'
 const fullPhotoCommentsCounter = fullPhotoContainer.querySelector('.social__comment-count');
 const fullPhotoCommentsLoader = fullPhotoContainer.querySelector('.comments-loader');
 
-const onCloseFullPhoto = () => {
+//комменты
+const fullPhotoCommentsList = fullPhotoContainer.querySelector('.social__comments');
+const fullPhotoCommentsItem = fullPhotoContainer.querySelector('.social__comment');
+const fragment = document.createDocumentFragment();
+
+const onCloseClick = () => {
+  fullPhotoClose();
+};
+
+const onEscDown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    fullPhotoClose();
+  }
+};
+
+function fullPhotoClose() {
+  // именно эта нотация; эта функция вызывается в коде выше; поменять местами тоже нельзя
   // возвращаем видимость временно скрытым блокам
   fullPhotoCommentsCounter.classList.remove('hidden');
   fullPhotoCommentsLoader.classList.remove('hidden');
 
   body.classList.remove('modal-open');
   fullPhotoContainer.classList.add('hidden');
-  // удалить прослушку на закрытие
-};
 
-const fillFullPhoto = (src, data) => {
-  //находим по src нужный объект в массиве
-  const index = data.findIndex((element) => src.includes(element.url));
-  console.log('выбран элемент ', index);
+  // очисщаем список комментов
+  fullPhotoCommentsList.innerHTML = '';
+
+  // удаляем прослушку на закрытие
+  fullPhotoCloseBtn.removeEventListener('click', onCloseClick);
+  document.removeEventListener('keydown', onEscDown);
+}
+
+const fillFullPhoto = ({ url, likes, comments, description }) => {
   // заполняем данными блок размметки
-  fullPhotoImg.src = src;
-  fullPhotoLikesCount.textContent = data[index].likes;
-  fullPhotoCommentsCount.textContent = data[index].comments.length;
-  fullPhotoDescription.textContent = data[index].description;
+  fullPhotoImg.src = url;
+  fullPhotoLikesCount.textContent = likes;
+  fullPhotoCommentsCount.textContent = comments.length;
+  fullPhotoDescription.textContent = description;
+  // комменарии
+  for (let i = 0; i < comments.length; i++) {
+    const newComment = fullPhotoCommentsItem.cloneNode(true);
+    newComment.querySelector('.social__picture').src = comments[i].avatar;
+    newComment.querySelector('.social__text').textContent = comments[i].message;
+    fragment.append(newComment);
+  }
+
+  fullPhotoCommentsList.innerHTML = '';
+  fullPhotoCommentsList.append(fragment);
 
   // временно скрываем блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader
   fullPhotoCommentsCounter.classList.add('hidden');
   fullPhotoCommentsLoader.classList.add('hidden');
 };
+
 const onThumbnailClick = (evt, data) => {
-  evt.preventDefault();
-  if (evt.target.src) {
+  const targetImgSrc = evt.target.closest('.picture').childNodes[1].src;
+  // не знаю, почему, но img - второй элемент в коллекции дочерних узлов
+  if (targetImgSrc) {
+    evt.preventDefault();
+    //находим по src нужный объект в массиве
+    const index = data.findIndex((element) => targetImgSrc.includes(element.url));
+
     //заполняем данными
-    fillFullPhoto(evt.target.src, data);
+    fillFullPhoto(data[index]);
 
     fullPhotoContainer.classList.remove('hidden');
     body.classList.add('modal-open');
-    // закрытие по кнопке
-    fullPhotoCloseBtn.addEventListener('click', onCloseFullPhoto); // вешаем прослшку на клик по кнопке закрытия
-    // закрытие по ESC
-    document.addEventListener('keydown', (evtkey) => {
-      if (evtkey.key === 'Escape') {
-        evt.preventDefault();
-        onCloseFullPhoto();
-      }
-    });
+    // закрытие по клику на крестик и ESC
+    fullPhotoCloseBtn.addEventListener('click', onCloseClick);
+    document.addEventListener('keydown', onEscDown);
   }
 };
 
@@ -64,5 +94,4 @@ const showFullPhoto = (data) => {
 
 export { showFullPhoto };
 
-//обраттить внимание: при клике на всплыввающй над минниатюрой блок с лайками окно не открыввается. Дополнить условие
-//обраттить внимание: что отображать если комментариев - 0
+// нужно ли допиливать открытие по enter? табуляция и пр...
