@@ -31,8 +31,8 @@ const onEscDown = (evt) => {
 function fullPhotoClose() {
   // именно эта нотация; эта функция вызывается в коде выше; поменять местами тоже нельзя
   // возвращаем видимость временно скрытым блокам
-  fullPhotoCommentsCounter.classList.remove('hidden');
-  fullPhotoCommentsLoader.classList.remove('hidden');
+  //fullPhotoCommentsCounter.classList.remove('hidden');
+  //fullPhotoCommentsLoader.classList.remove('hidden');
 
   body.classList.remove('modal-open');
   fullPhotoContainer.classList.add('hidden');
@@ -63,8 +63,8 @@ const fillFullPhoto = ({ url, likes, comments, description }) => {
   fullPhotoCommentsList.append(fragment);
 
   // временно скрываем блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader
-  fullPhotoCommentsCounter.classList.add('hidden');
-  fullPhotoCommentsLoader.classList.add('hidden');
+  //fullPhotoCommentsCounter.classList.add('hidden');
+  //fullPhotoCommentsLoader.classList.add('hidden');
 };
 
 const onThumbnailClick = (evt, data) => {
