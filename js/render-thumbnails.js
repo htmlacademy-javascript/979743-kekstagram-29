@@ -7,12 +7,12 @@ const renderThumbnail = ({ id, url, description, likes, comments }) => {
   // формируем шаблон для одной миниатюры
 
   const newThumbnail = thumbnailTemplate.cloneNode(true);
+  //добавляем в разметку id для каждой миниатюры, чтобы по нему потом искать в массиве
   newThumbnail.id = id;
   newThumbnail.querySelector('.picture__img').src = url;
   newThumbnail.querySelector('.picture__img').alt = description;
   newThumbnail.querySelector('.picture__likes').textContent = likes;
   newThumbnail.querySelector('.picture__comments').textContent = comments.length;
-  //добавляем в разметку id для каждой миниатюры, чтобы по нему потом искать в массиве
   fragment.append(newThumbnail);
 };
 
