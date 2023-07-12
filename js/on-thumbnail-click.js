@@ -41,4 +41,4 @@ const addListenerThumbnailsContainer = () => {
   });
 };
 
-export { addListenerThumbnailsContainer };
+export { addListenerThumbnailsContainer, onCloseClick, onEscDown };

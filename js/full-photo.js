@@ -2,11 +2,13 @@
 // на входе - объект, соответствующей кликнутой миниатюре
 import { toggleBodyForPopup } from './util.js';
 import { COMMENTS_PORTION } from './enums.js';
+import { onCloseClick, onEscDown } from './on-thumbnail-click.js';
 
 const fullPhotoContainer = document.querySelector('.big-picture'); //дублируется в on-thumbnail-click
 const img = fullPhotoContainer.querySelector('.big-picture__img img');
 const likesCount = fullPhotoContainer.querySelector('.likes-count');
 const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption');
+const closeBtn = fullPhotoContainer.querySelector('.big-picture__cancel');
 //комменты
 const fullPhotoCommentsCount = fullPhotoContainer.querySelector('.comments-count');
 const commentsPortion = fullPhotoContainer.querySelector('.comments-portion'); //доавлен span в разметку
@@ -47,6 +49,8 @@ const closeFullPhoto = () => {
   commentsLoader.classList.remove('hidden');
   commentsPortionCounter = 1;
   commentsLoader.removeEventListener('click', onLoaderClick);
+  closeBtn.removeEventListener('click', onCloseClick);
+  document.removeEventListener('keydown', onEscDown);
 };
 
 const renderComments = (comments) => {
