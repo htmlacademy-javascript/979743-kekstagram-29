@@ -24,8 +24,10 @@ const onThumbnailClick = (evt, data) => {
   const targetElem = evt.target.closest('.picture');
   if (targetElem) {
     evt.preventDefault();
+    // ищем нужный объект в массиве
+    const index = data.findIndex((elem) => elem.id === Number(targetElem.id));
     //заполняем данными
-    fillFullPhoto(data[targetElem.id - 1]);
+    fillFullPhoto(data[index]);
     fullPhotoContainer.classList.remove('hidden');
     toggleBodyForPopup();
   }
