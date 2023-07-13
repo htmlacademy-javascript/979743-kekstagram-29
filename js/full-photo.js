@@ -1,97 +1,83 @@
-// открытие и закрытие окна для отображения полноразмерной фотографии и подробной информации
-// на входе массив объектов
-const body = document.querySelector('body'); //????
-const photosContainer = document.querySelector('.pictures');
-const fullPhotoContainer = document.querySelector('.big-picture');
-const fullPhotoCloseBtn = fullPhotoContainer.querySelector('.big-picture__cancel');
-const fullPhotoImg = fullPhotoContainer.querySelector('.big-picture__img img');
-const fullPhotoLikesCount = fullPhotoContainer.querySelector('.likes-count');
-const fullPhotoCommentsCount = fullPhotoContainer.querySelector('.comments-count');
-const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption');
-// временно скрываем
-const fullPhotoCommentsCounter = fullPhotoContainer.querySelector('.social__comment-count');
-const fullPhotoCommentsLoader = fullPhotoContainer.querySelector('.comments-loader');
+// формирование окна полноразмерной фотографии и подробной информации
+// на входе - объект, соответствующей кликнутой миниатюре
+import { toggleBodyForPopup } from './util.js';
+import { COMMENTS_PORTION } from './enums.js';
+import { onCloseClick, onEscDown } from './on-thumbnail-click.js';
 
+const fullPhotoContainer = document.querySelector('.big-picture'); //дублируется в on-thumbnail-click
+const img = fullPhotoContainer.querySelector('.big-picture__img img');
+const likesCount = fullPhotoContainer.querySelector('.likes-count');
+const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption');
+const closeBtn = fullPhotoContainer.querySelector('.big-picture__cancel');
 //комменты
+const fullPhotoCommentsCount = fullPhotoContainer.querySelector('.comments-count');
+const commentsPortion = fullPhotoContainer.querySelector('.comments-portion'); //доавлен span в разметку
+const commentsLoader = fullPhotoContainer.querySelector('.comments-loader');
 const fullPhotoCommentsList = fullPhotoContainer.querySelector('.social__comments');
 const fullPhotoCommentsItem = fullPhotoContainer.querySelector('.social__comment');
-const fragment = document.createDocumentFragment();
+const fragment = document.createDocumentFragment(); // для коментов
 
-const onCloseClick = () => {
-  fullPhotoClose();
+// для дозагрузки комментов
+let currentComments = [];
+let commentsPortionCounter = 1; //глобальные переменные, я не придумала, как без них обойтись
+
+const renderComment = ({ avatar, message }) => {
+  // отрисовывает один комментарий
+  const newComment = fullPhotoCommentsItem.cloneNode(true);
+  newComment.querySelector('.social__picture').src = avatar;
+  newComment.querySelector('.social__text').textContent = message;
+  fragment.append(newComment);
 };
 
-const onEscDown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    fullPhotoClose();
+const onLoaderClick = () => {
+  if ((commentsPortionCounter + 1) * COMMENTS_PORTION - 1 >= currentComments.length - 1) {
+    commentsLoader.classList.add('hidden');
   }
+  const lastComment = Math.min((commentsPortionCounter + 1) * COMMENTS_PORTION - 1, currentComments.length - 1);
+  for (let i = commentsPortionCounter * COMMENTS_PORTION; i <= lastComment; i++) {
+    renderComment(currentComments[i]);
+  }
+
+  fullPhotoCommentsList.append(fragment);
+  commentsPortionCounter++;
+  commentsPortion.textContent = lastComment + 1;
 };
 
-function fullPhotoClose() {
-  // именно эта нотация; эта функция вызывается в коде выше; поменять местами тоже нельзя
-  // возвращаем видимость временно скрытым блокам
-  fullPhotoCommentsCounter.classList.remove('hidden');
-  fullPhotoCommentsLoader.classList.remove('hidden');
-
-  body.classList.remove('modal-open');
+const closeFullPhoto = () => {
+  toggleBodyForPopup();
   fullPhotoContainer.classList.add('hidden');
-
-  // очисщаем список комментов
-  fullPhotoCommentsList.innerHTML = '';
-
-  // удаляем прослушку на закрытие
-  fullPhotoCloseBtn.removeEventListener('click', onCloseClick);
+  commentsLoader.classList.remove('hidden');
+  commentsPortionCounter = 1;
+  commentsLoader.removeEventListener('click', onLoaderClick);
+  closeBtn.removeEventListener('click', onCloseClick);
   document.removeEventListener('keydown', onEscDown);
-}
+};
 
-const fillFullPhoto = ({ url, likes, comments, description }) => {
-  // заполняем данными блок размметки
-  fullPhotoImg.src = url;
-  fullPhotoLikesCount.textContent = likes;
-  fullPhotoCommentsCount.textContent = comments.length;
-  fullPhotoDescription.textContent = description;
-  // комменарии
-  for (let i = 0; i < comments.length; i++) {
-    const newComment = fullPhotoCommentsItem.cloneNode(true);
-    newComment.querySelector('.social__picture').src = comments[i].avatar;
-    newComment.querySelector('.social__text').textContent = comments[i].message;
-    fragment.append(newComment);
+const renderComments = (comments) => {
+  // отрисовывает первые 5 комментов или меньше, на входе - массив комментов
+  // вешает прослушку на дозагрузку комментов
+  for (let i = 0; i < Math.min(COMMENTS_PORTION, comments.length); i++) {
+    renderComment(comments[i]);
   }
-
   fullPhotoCommentsList.innerHTML = '';
   fullPhotoCommentsList.append(fragment);
 
-  // временно скрываем блоки счётчика комментариев .social__comment-count и загрузки новых комментариев .comments-loader
-  fullPhotoCommentsCounter.classList.add('hidden');
-  fullPhotoCommentsLoader.classList.add('hidden');
-};
-
-const onThumbnailClick = (evt, data) => {
-  const targetImgSrc = evt.target.closest('.picture').childNodes[1].src;
-  // не знаю, почему, но img - второй элемент в коллекции дочерних узлов
-  if (targetImgSrc) {
-    evt.preventDefault();
-    //находим по src нужный объект в массиве
-    const index = data.findIndex((element) => targetImgSrc.includes(element.url));
-
-    //заполняем данными
-    fillFullPhoto(data[index]);
-
-    fullPhotoContainer.classList.remove('hidden');
-    body.classList.add('modal-open');
-    // закрытие по клику на крестик и ESC
-    fullPhotoCloseBtn.addEventListener('click', onCloseClick);
-    document.addEventListener('keydown', onEscDown);
+  if (comments.length <= COMMENTS_PORTION) {
+    commentsLoader.classList.add('hidden');
   }
+  // выводим оставшиеся комменты
+  commentsLoader.addEventListener('click', onLoaderClick);
 };
 
-const showFullPhoto = (data) => {
-  photosContainer.addEventListener('click', (evt) => {
-    onThumbnailClick(evt, data);
-  });
+const fillFullPhoto = ({ url, likes, comments, description }) => {
+  // заполняем данными блок размметки
+  img.src = url;
+  likesCount.textContent = likes;
+  fullPhotoCommentsCount.textContent = comments.length;
+  commentsPortion.textContent = Math.min(COMMENTS_PORTION, comments.length);
+  fullPhotoDescription.textContent = description;
+  currentComments = comments;
+  renderComments(comments);
 };
 
-export { showFullPhoto };
-
-// нужно ли допиливать открытие по enter? табуляция и пр...
+export { fillFullPhoto, closeFullPhoto };
