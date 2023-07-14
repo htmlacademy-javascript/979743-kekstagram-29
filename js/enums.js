@@ -14,4 +14,23 @@ const AVATAR_NUMBER = {
   max: 6,
 };
 const COMMENTS_PORTION = 5;
-export { PHOTOS_COUNT, LIKES_COUNT, COMMENTS_COUNT, AVATAR_NUMBER, COMMENTS_PORTION };
+
+const MAX_HASHTAG_COUNT = 5;
+
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const ErrorText = {
+  INVALID_COUNT: `Количество хэштегов не может быть больше ${MAX_HASHTAG_COUNT}`,
+  INVALID_PATTERN: 'Хэштег не соответствует правилам',
+  NOT_UNIQUE: 'Хэштеги не должны повторяться',
+};
+export {
+  PHOTOS_COUNT,
+  LIKES_COUNT,
+  COMMENTS_COUNT,
+  AVATAR_NUMBER,
+  COMMENTS_PORTION,
+  MAX_HASHTAG_COUNT,
+  ErrorText,
+  VALID_SYMBOLS,
+};

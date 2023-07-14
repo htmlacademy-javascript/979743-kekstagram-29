@@ -30,14 +30,16 @@ const onThumbnailClick = (evt, data) => {
     fillFullPhoto(data[index]);
     fullPhotoContainer.classList.remove('hidden');
     toggleBodyForPopup();
+    fullPhotoCloseBtn.addEventListener('click', onCloseClick);
+    document.addEventListener('keydown', onEscDown);
   }
 };
 
 const addListenerThumbnailsContainer = () => {
   photosContainer.addEventListener('click', (evt) => {
     onThumbnailClick(evt, allPhotosData);
-    fullPhotoCloseBtn.addEventListener('click', onCloseClick);
-    document.addEventListener('keydown', onEscDown);
+    // fullPhotoCloseBtn.addEventListener('click', onCloseClick);
+    // document.addEventListener('keydown', onEscDown);
   });
 };
 
