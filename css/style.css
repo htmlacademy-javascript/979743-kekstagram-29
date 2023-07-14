@@ -1408,3 +1408,25 @@ main {
 .hidden {
   display: none;
 }
+.img-upload__field-wrapper--error {
+  position: relative;
+  z-index: 10000;
+  width: 450px;
+  margin: 0 auto;
+  margin-top: -30px;
+  padding: 5px 0;
+  color: #ffffff;
+  font-size: 12px;
+  background-color: #e25858;
+  border-radius: 5px;
+}
+.text__hashtags ~ .img-upload__field-wrapper--error {
+  margin-top: -6px;
+}
+.has-danger .text__description,
+.has-danger .text__hashtags  {
+  outline: none;
+  margin: 0 auto;
+  border: #e25858 solid 3px;
+  border-radius: 5px;
+}

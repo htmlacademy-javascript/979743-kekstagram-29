@@ -20,7 +20,14 @@ const createIdGenerator = () => {
 };
 
 const isEsc = (evt) => evt.key === 'Escape';
-
+//переключатель класса для body при открытии модальных окон
 const toggleBodyForPopup = () => body.classList.toggle('modal-open');
 
-export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEsc, toggleBodyForPopup };
+//нормализатор строк
+const normalizeTags = (tagStr) =>
+  tagStr
+    .trim()
+    .split(' ')
+    .filter((tag) => Boolean(tag.length));
+
+export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEsc, toggleBodyForPopup, normalizeTags };
