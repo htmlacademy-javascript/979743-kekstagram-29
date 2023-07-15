@@ -24,6 +24,13 @@ const ErrorText = {
   INVALID_PATTERN: 'Хэштег не соответствует правилам',
   NOT_UNIQUE: 'Хэштеги не должны повторяться',
 };
+
+const SCALE = {
+  step: 25,
+  max: 100,
+  min: 25
+};
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -33,4 +40,5 @@ export {
   MAX_HASHTAG_COUNT,
   ErrorText,
   VALID_SYMBOLS,
+  SCALE
 };

@@ -1,7 +1,8 @@
-// окно загрузки фото; наложение эффектов.
+// окно загрузки фото; валидация; ее возм, потом в отдельный модуль
 import { MAX_HASHTAG_COUNT, ErrorText, VALID_SYMBOLS } from './enums.js';
-import { onCloseClick, onEscDown } from './on-upload-click.js';
 import { toggleBodyForPopup, normalizeTags } from './util.js';
+import { onCloseClick, onEscDown } from './on-upload-click.js';
+import { addListenerScaleBtns } from './scale-photo.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const editImgForm = document.querySelector('.img-upload__overlay');
@@ -41,14 +42,20 @@ const disableSubmit = () => {
 editImgComment.addEventListener('input', disableSubmit);
 editImgTags.addEventListener('input', disableSubmit);
 
+const openEditImg = () => {
+  // логика открытия окна редактирования фото
+  addListenerScaleBtns();
+};
+
 const closeEditImg = () => {
   uploadForm.reset();
   pristine.reset();
   // сбросить значения эффектов
+  // сбросить значения масштаба, удалить обработчики кнопок масштабирования
   editImgForm.classList.add('hidden');
   toggleBodyForPopup();
   editImgCloseBtn.removeEventListener('click', onCloseClick);
   document.removeEventListener('keydown', onEscDown);
 };
 
-export { closeEditImg };
+export { openEditImg, closeEditImg };
