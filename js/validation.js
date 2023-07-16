@@ -1,12 +1,10 @@
-// окно загрузки фото; валидация; ее возм, потом в отдельный модуль
+// валидация комментариев и хэш-тегов
+// потом дописать отдельную валидацию для каждого вида ошибки, чтоб было соотв сообщение пользователю
 import { MAX_HASHTAG_COUNT, ErrorText, VALID_SYMBOLS } from './enums.js';
-import { toggleBodyForPopup, normalizeTags } from './util.js';
-import { onCloseClick, onEscDown } from './on-upload-click.js';
-import { addListenerScaleBtns } from './scale-photo.js';
+import { normalizeTags } from './util.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const editImgForm = document.querySelector('.img-upload__overlay');
-const editImgCloseBtn = editImgForm.querySelector('.img-upload__cancel');
 const editImgComment = editImgForm.querySelector('.text__description');
 const editImgTags = editImgForm.querySelector('.text__hashtags');
 const submitBtn = editImgForm.querySelector('#upload-submit');
@@ -16,6 +14,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
 });
+
 const hasValidTagsCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 
 const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
@@ -42,20 +41,6 @@ const disableSubmit = () => {
 editImgComment.addEventListener('input', disableSubmit);
 editImgTags.addEventListener('input', disableSubmit);
 
-const openEditImg = () => {
-  // логика открытия окна редактирования фото
-  addListenerScaleBtns();
-};
 
-const closeEditImg = () => {
-  uploadForm.reset();
-  pristine.reset();
-  // сбросить значения эффектов
-  // сбросить значения масштаба, удалить обработчики кнопок масштабирования
-  editImgForm.classList.add('hidden');
-  toggleBodyForPopup();
-  editImgCloseBtn.removeEventListener('click', onCloseClick);
-  document.removeEventListener('keydown', onEscDown);
-};
 
-export { openEditImg, closeEditImg };
+export {pristine};

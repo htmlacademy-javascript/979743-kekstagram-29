@@ -1,6 +1,6 @@
 // обрабатывает change на инпуте, открывает и закрывает форму для загрузки изображения
 import { isEsc, toggleBodyForPopup } from './util.js';
-import { closeEditImg, openEditImg } from './upload-photo.js';
+import { openEditPhoto, closeEditPhoto } from './edit-photo.js';
 
 const uploadForm = document.querySelector('#upload-select-image');
 const uploadInput = uploadForm.querySelector('.img-upload__input');
@@ -12,12 +12,12 @@ const editImgTags = editImgForm.querySelector('.text__hashtags');
 const onEscDown = (evt) => {
   if (isEsc(evt)) {
     evt.preventDefault();
-    closeEditImg();
+    closeEditPhoto();
   }
 };
 
 const onCloseClick = () => {
-  closeEditImg();
+  closeEditPhoto();
 };
 
 //отмена закрытия по ESC, когда в фокусе поле с тегами или комментарием
@@ -36,7 +36,7 @@ editImgTags.addEventListener('keydown', (evt) => {
 
 const onUploadInputChange = () => {
   //открывает форму редактирования, запускает ф-ии для эффектров и масштабирования
-  openEditImg();
+  openEditPhoto();
   editImgForm.classList.remove('hidden');
   toggleBodyForPopup();
   editImgCloseBtn.addEventListener('click', onCloseClick);

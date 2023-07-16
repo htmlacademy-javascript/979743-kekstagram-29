@@ -26,6 +26,7 @@ const ErrorText = {
 };
 
 const SCALE = {
+  startValue: 100,
   step: 25,
   max: 100,
   min: 25

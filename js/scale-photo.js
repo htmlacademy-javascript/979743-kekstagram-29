@@ -4,11 +4,11 @@ import { SCALE } from './enums.js';
 const scaleIncrease = document.querySelector('.scale__control--bigger');
 const scaleDecrease = document.querySelector('.scale__control--smaller');
 const scaleInput = document.querySelector('.scale__control--value');
-const uploadingPhoto = document.querySelector('.img-upload__preview img');
+const photoPreview = document.querySelector('.img-upload__preview img');
 
 
 const scalePhoto = (value) => {
-  uploadingPhoto.style.transform = `scale(${value / 100})`;
+  photoPreview.style.transform = `scale(${value / 100})`;
   scaleInput.value = `${value}%`;
 };
 
@@ -20,9 +20,15 @@ const onDecreaseClick = () => {
   scalePhoto(Math.max(parseInt(scaleInput.value, 10) - SCALE.step, SCALE.min));
 };
 
-const addListenerScaleBtns = () => {
+const initScale = () => {
   scaleIncrease.addEventListener('click', onIncreaseClick);
   scaleDecrease.addEventListener('click', onDecreaseClick);
+  photoPreview.style.transform = 'scale(1)';
 };
 
-export {addListenerScaleBtns};
+const resetScale = () => {
+  scalePhoto(SCALE.startValue);
+  // удалить обработчики кнопок масштабирования, эффектов
+};
+
+export {initScale, resetScale};
