@@ -17,9 +17,8 @@ const openEditPhoto = () => {
 const closeEditPhoto = () => {
   uploadForm.reset();
   pristine.reset();
-  // сбросить значения эффектов
   resetScale();
-  resetEffects(); //удалить слайдер
+  resetEffects();
   editImgForm.classList.add('hidden');
   toggleBodyForPopup();
   editImgCloseBtn.removeEventListener('click', onCloseClick);

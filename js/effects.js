@@ -4,10 +4,10 @@ const sliderContainer = document.querySelector('.img-upload__effect-level'); //f
 const sliderElement = document.querySelector('.effect-level__slider'); //контейнер для вставки слайдера
 const effectsList = document.querySelector('.effects__list');
 const effectLevelInput = document.querySelector('.effect-level__value');
-const originalInput = document.querySelector('#effect-none');
-const originalItem = document.querySelector('.effects__item:nth-child(1)');
-const chromInput = document.querySelector('#effect-chrome');
-const cromItem = document.querySelector('.effects__item:nth-child(2)');
+
+const setPreviewImgStyle = (value) {
+  // устанавливает стиль для превьюхи по chosenEffects и положению ползунка
+};
 
 const createSlider = () => {
   noUiSlider.create(sliderElement, {
@@ -21,15 +21,9 @@ const createSlider = () => {
   });
   sliderElement.noUiSlider.on('update', (...rest) => {
     effectLevelInput.value = sliderElement.noUiSlider.get();
+    setPreviewImgStyle(effectLevelInput.value);
     console.log(effectLevelInput.value);
   });
-};
-
-const chooseOriginal = () => {
-  previewImg.style.filter = 'none';
-  effectLevelInput.value = 0;
-  sliderContainer.classList.add('hidden');
-
 };
 
 // const chooseChrom = () =>{
@@ -46,8 +40,31 @@ const chooseOriginal = () => {
 //   });
 
 // };
+const effectsStyles = {
+  crome: {
+    style: 'grayscale',
+    unit: ''
+  },
+  sepia: {
+    style: 'sepia',
+    unit: ''
+  },
+  marvin: 'invert',
+  phobos: 'blur',
+  heat: 'brightness'
+};
 const onEffectsChange = (evt) => {
-  console.log(evt.target.value);
+  sliderContainer.classList.remove('hidden');
+  // сохранить стиль в глоб переменную chosenEffect
+
+  // console.log(evt.target.value);
+  const evtTargetValue = evt.target.value;
+  console.log('style is ', effectsStyles.crome);
+  console.log('style is ', effectsStyles['chrome']);
+
+
+
+  // previewImg.style.filter = `${evtTargetValue}(1)`;
   };
 
 const initEffects = () => {
@@ -55,11 +72,12 @@ const initEffects = () => {
   effectLevelInput.value = 0; //????
   createSlider();
   sliderContainer.classList.add('hidden');
-  //прослушка на эффекты
+  effectsList.addEventListener('change', onEffectsChange);
 };
 
 const resetEffects = () =>{
   sliderElement.noUiSlider.destroy();
+  previewImg.style.filter = 'none';
 };
 
 

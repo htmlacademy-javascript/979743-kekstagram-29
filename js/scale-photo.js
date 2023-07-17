@@ -28,7 +28,8 @@ const initScale = () => {
 
 const resetScale = () => {
   scalePhoto(SCALE.startValue);
-  // удалить обработчики кнопок масштабирования, эффектов
+  scaleIncrease.removeEventListener('click', onIncreaseClick);
+  scaleDecrease.removeEventListener('click', onDecreaseClick);
 };
 
 export {initScale, resetScale};
