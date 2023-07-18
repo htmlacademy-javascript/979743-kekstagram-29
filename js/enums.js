@@ -29,7 +29,52 @@ const SCALE = {
   startValue: 100,
   step: 25,
   max: 100,
-  min: 25
+  min: 25,
+};
+
+const EFFECTS_STYLES = {
+  chrome: {
+    style: 'grayscale',
+    unit: '',
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  sepia: {
+    style: 'sepia',
+    unit: '',
+    min: 0,
+    max: 1,
+    step: 0.1,
+  },
+  marvin: {
+    style: 'invert',
+    unit: '%',
+    min: 0,
+    max: 100,
+    step: 1,
+  },
+  phobos: {
+    style: 'blur',
+    unit: 'px',
+    min: 0,
+    max: 3,
+    step: 0.1,
+  },
+  heat: {
+    style: 'brightness',
+    unit: '',
+    min: 1,
+    max: 3,
+    step: 0.1,
+  },
+  none: {
+    style: 'none',
+    unit: '',
+    min: 0,
+    max: 0,
+    step: 0,
+  },
 };
 
 export {
@@ -41,5 +86,6 @@ export {
   MAX_HASHTAG_COUNT,
   ErrorText,
   VALID_SYMBOLS,
-  SCALE
+  SCALE,
+  EFFECTS_STYLES,
 };
