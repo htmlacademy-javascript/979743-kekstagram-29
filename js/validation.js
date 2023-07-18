@@ -41,6 +41,4 @@ const disableSubmit = () => {
 editImgComment.addEventListener('input', disableSubmit);
 editImgTags.addEventListener('input', disableSubmit);
 
-
-
-export {pristine};
+export { pristine };
