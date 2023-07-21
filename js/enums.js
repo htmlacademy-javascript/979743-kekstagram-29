@@ -77,6 +77,8 @@ const EFFECTS_STYLES = {
   },
 };
 
+const SERVER_URL = 'https://29.javascript.pages.academy/kekstagram/data';
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -88,4 +90,5 @@ export {
   VALID_SYMBOLS,
   SCALE,
   EFFECTS_STYLES,
+  SERVER_URL,
 };
