@@ -1,30 +1,20 @@
 //загружает данные с сервера, обрабатывает ошибки; возвращает промис
-import { SERVER_URL } from './enums.js';
+import { Url, Method, ErrorText } from './enums.js';
 
-const forResolve = (resolve, reject) => {
-  // сценарий успешной загрузки
-  let dataFromServer = [];
-  fetch(SERVER_URL)
+const load = (url, errorText, method = Method.GET, body = null) =>
+  fetch(url, { method, body })
     .then((response) => {
       // проверка кода ответа
-      console.log('response - ', response);
-      if (response.status === 200) {
-        dataFromServer = response.json();
-        resolve(dataFromServer);
-      } else {
-        reject('что-то сломалось, данных нет, нарисовать ничего не можем');
+      //console.log('response - ', response.status);
+      if (!response.ok) {
+        throw new Error();
       }
+      return response.json();
     })
-    .catch((message) => alert(message));
-};
+    .catch(() => {
+      throw new Error(errorText);
+    }); // load возвращает промис
 
-// fetch(SERVER_URL)
-//   .then((response) => response.json())
-//   .then((photosData) => {
-//     renderThumbnails(photosData); // отдали данные на отрисовку
-//     addListenerThumbnailsContainer(photosData);
-//   });
+const getData = () => load(Url.DOWNLOAD, ErrorText.GET_DATA); // возвращает промис
 
-const fetchPhotos = new Promise(forResolve);
-
-export { fetchPhotos };
+export { getData };

@@ -23,6 +23,7 @@ const ErrorText = {
   INVALID_COUNT: `Количество хэштегов не может быть больше ${MAX_HASHTAG_COUNT}`,
   INVALID_PATTERN: 'Хэштег не соответствует правилам',
   NOT_UNIQUE: 'Хэштеги не должны повторяться',
+  GET_DATA: 'Нам очень жаль, но что-то сломалось? и мы не можем сейчас показать Вам фотографии. ',
 };
 
 const SCALE = {
@@ -77,7 +78,14 @@ const EFFECTS_STYLES = {
   },
 };
 
-const SERVER_URL = 'https://29.javascript.pages.academy/kekstagram/data';
+const Url = {
+  DOWNLOAD: 'https://29.javascript.pages.academy/kekstagram/data',
+};
+
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
 
 export {
   PHOTOS_COUNT,
@@ -90,5 +98,6 @@ export {
   VALID_SYMBOLS,
   SCALE,
   EFFECTS_STYLES,
-  SERVER_URL,
+  Url,
+  Method,
 };
