@@ -1,6 +1,6 @@
 // вспомогательные функции
 
-const body = document.querySelector('body');
+const bodyElem = document.querySelector('body');
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -21,7 +21,7 @@ const createIdGenerator = () => {
 
 const isEsc = (evt) => evt.key === 'Escape';
 //переключатель класса для body при открытии модальных окон
-const toggleBodyForPopup = () => body.classList.toggle('modal-open');
+const toggleBodyForPopup = () => bodyElem.classList.toggle('modal-open');
 
 //нормализатор строк
 const normalizeTags = (tagStr) =>

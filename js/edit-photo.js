@@ -10,7 +10,7 @@ import { sendData } from './server.js';
 
 const uploadFormElem = document.querySelector('#upload-select-image'); // форма
 const editImgFormElem = document.querySelector('.img-upload__overlay');
-const editImgCloseBtn = editImgFormElem.querySelector('.img-upload__cancel');
+const editImgCloseBtnElem = editImgFormElem.querySelector('.img-upload__cancel');
 const submitBtnElem = editImgFormElem.querySelector('.img-upload__submit');
 
 const closeEditPhoto = () => {
@@ -20,7 +20,7 @@ const closeEditPhoto = () => {
   resetEffects();
   editImgFormElem.classList.add('hidden');
   toggleBodyForPopup();
-  editImgCloseBtn.removeEventListener('click', onCloseClick);
+  editImgCloseBtnElem.removeEventListener('click', onCloseClick);
   document.removeEventListener('keydown', onEscDown);
 };
 

@@ -4,17 +4,17 @@ import { toggleBodyForPopup } from './util.js';
 import { COMMENTS_PORTION } from './enums.js';
 import { onCloseClick, onEscDown } from './on-thumbnail-click.js';
 
-const fullPhotoContainer = document.querySelector('.big-picture'); //дублируется в on-thumbnail-click
-const img = fullPhotoContainer.querySelector('.big-picture__img img');
-const likesCount = fullPhotoContainer.querySelector('.likes-count');
-const fullPhotoDescription = fullPhotoContainer.querySelector('.social__caption');
-const closeBtn = fullPhotoContainer.querySelector('.big-picture__cancel');
+const fullPhotoContainerElem = document.querySelector('.big-picture'); //дублируется в on-thumbnail-click
+const imgElem = fullPhotoContainerElem.querySelector('.big-picture__img img');
+const likesCountElem = fullPhotoContainerElem.querySelector('.likes-count');
+const fullPhotoDescriptionElem = fullPhotoContainerElem.querySelector('.social__caption');
+const closeBtnElem = fullPhotoContainerElem.querySelector('.big-picture__cancel');
 //комменты
-const fullPhotoCommentsCount = fullPhotoContainer.querySelector('.comments-count');
-const commentsPortion = fullPhotoContainer.querySelector('.comments-portion'); //доавлен span в разметку
-const commentsLoader = fullPhotoContainer.querySelector('.comments-loader');
-const fullPhotoCommentsList = fullPhotoContainer.querySelector('.social__comments');
-const fullPhotoCommentsItem = fullPhotoContainer.querySelector('.social__comment');
+const fullPhotoCommentsCountElem = fullPhotoContainerElem.querySelector('.comments-count');
+const commentsPortionElem = fullPhotoContainerElem.querySelector('.comments-portion'); //доавлен span в разметку
+const commentsLoaderElem = fullPhotoContainerElem.querySelector('.comments-loader');
+const fullPhotoCommentsListElem = fullPhotoContainerElem.querySelector('.social__comments');
+const fullPhotoCommentsItemElem = fullPhotoContainerElem.querySelector('.social__comment');
 const fragment = document.createDocumentFragment(); // для коментов
 
 // для дозагрузки комментов
@@ -23,7 +23,7 @@ let commentsPortionCounter = 1; //глобальные переменные, я 
 
 const renderComment = ({ avatar, message }) => {
   // отрисовывает один комментарий
-  const newComment = fullPhotoCommentsItem.cloneNode(true);
+  const newComment = fullPhotoCommentsItemElem.cloneNode(true);
   newComment.querySelector('.social__picture').src = avatar;
   newComment.querySelector('.social__text').textContent = message;
   fragment.append(newComment);
@@ -31,25 +31,25 @@ const renderComment = ({ avatar, message }) => {
 
 const onLoaderClick = () => {
   if ((commentsPortionCounter + 1) * COMMENTS_PORTION - 1 >= currentComments.length - 1) {
-    commentsLoader.classList.add('hidden');
+    commentsLoaderElem.classList.add('hidden');
   }
   const lastComment = Math.min((commentsPortionCounter + 1) * COMMENTS_PORTION - 1, currentComments.length - 1);
   for (let i = commentsPortionCounter * COMMENTS_PORTION; i <= lastComment; i++) {
     renderComment(currentComments[i]);
   }
 
-  fullPhotoCommentsList.append(fragment);
+  fullPhotoCommentsListElem.append(fragment);
   commentsPortionCounter++;
-  commentsPortion.textContent = lastComment + 1;
+  commentsPortionElem.textContent = lastComment + 1;
 };
 
 const closeFullPhoto = () => {
   toggleBodyForPopup();
-  fullPhotoContainer.classList.add('hidden');
-  commentsLoader.classList.remove('hidden');
+  fullPhotoContainerElem.classList.add('hidden');
+  commentsLoaderElem.classList.remove('hidden');
   commentsPortionCounter = 1;
-  commentsLoader.removeEventListener('click', onLoaderClick);
-  closeBtn.removeEventListener('click', onCloseClick);
+  commentsLoaderElem.removeEventListener('click', onLoaderClick);
+  closeBtnElem.removeEventListener('click', onCloseClick);
   document.removeEventListener('keydown', onEscDown);
 };
 
@@ -59,23 +59,23 @@ const renderComments = (comments) => {
   for (let i = 0; i < Math.min(COMMENTS_PORTION, comments.length); i++) {
     renderComment(comments[i]);
   }
-  fullPhotoCommentsList.innerHTML = '';
-  fullPhotoCommentsList.append(fragment);
+  fullPhotoCommentsListElem.innerHTML = '';
+  fullPhotoCommentsListElem.append(fragment);
 
   if (comments.length <= COMMENTS_PORTION) {
-    commentsLoader.classList.add('hidden');
+    commentsLoaderElem.classList.add('hidden');
   }
   // выводим оставшиеся комменты
-  commentsLoader.addEventListener('click', onLoaderClick);
+  commentsLoaderElem.addEventListener('click', onLoaderClick);
 };
 
 const fillFullPhoto = ({ url, likes, comments, description }) => {
   // заполняем данными блок размметки
-  img.src = url;
-  likesCount.textContent = likes;
-  fullPhotoCommentsCount.textContent = comments.length;
-  commentsPortion.textContent = Math.min(COMMENTS_PORTION, comments.length);
-  fullPhotoDescription.textContent = description;
+  imgElem.src = url;
+  likesCountElem.textContent = likes;
+  fullPhotoCommentsCountElem.textContent = comments.length;
+  commentsPortionElem.textContent = Math.min(COMMENTS_PORTION, comments.length);
+  fullPhotoDescriptionElem.textContent = description;
   currentComments = comments;
   renderComments(comments);
 };
