@@ -1,7 +1,8 @@
 // точка входа. подключен в index.html
 //import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
 // import { SERVER_URL } from './enums.js';
-import { getData, showError } from './server.js';
+import { showError } from './messages.js';
+import { getData } from './server.js';
 import { ErrorText } from './enums.js';
 import { renderThumbnails } from './render-thumbnails.js';
 import { addListenerThumbnailsContainer } from './on-thumbnail-click.js';

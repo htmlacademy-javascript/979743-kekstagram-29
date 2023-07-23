@@ -24,6 +24,7 @@ const ErrorText = {
   INVALID_PATTERN: 'Хэштег не соответствует правилам',
   NOT_UNIQUE: 'Хэштеги не должны повторяться',
   GET_DATA: 'Нам очень жаль, но мы не можем сейчас показать Вам фотографии. Мы обязательно скоро все починим',
+  SEND_DATA: 'Нам очень жаль, но мы не можем сейчас загрузить Вашу фотографию. Мы обязательно скоро все починим',
 };
 
 const SCALE = {
@@ -79,7 +80,8 @@ const EFFECTS_STYLES = {
 };
 
 const Url = {
-  DOWNLOAD: 'https://29.javascript.pages.academy/kekstagram/data',
+  GET_DATA: 'https://29.javascript.pages.academy/kekstagram/data',
+  SEND_DATA: 'https://29.javascript.pages.academy/kekstagram',
 };
 
 const Method = {
