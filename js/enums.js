@@ -89,6 +89,11 @@ const Method = {
   POST: 'POST',
 };
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикуем...',
+};
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -102,4 +107,5 @@ export {
   EFFECTS_STYLES,
   Url,
   Method,
+  SubmitButtonText,
 };

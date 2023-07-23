@@ -1,5 +1,6 @@
 // окно редактирования фото;
 import { toggleBodyForPopup } from './util.js';
+import { SubmitButtonText } from './enums.js';
 import { showUploadSucces, showUploadError } from './messages.js';
 import { pristine } from './validation.js';
 import { onCloseClick, onEscDown } from './on-upload-click.js';
@@ -10,6 +11,7 @@ import { sendData } from './server.js';
 const uploadFormElem = document.querySelector('#upload-select-image'); // форма
 const editImgFormElem = document.querySelector('.img-upload__overlay');
 const editImgCloseBtn = editImgFormElem.querySelector('.img-upload__cancel');
+const submitBtnElem = editImgFormElem.querySelector('.img-upload__submit');
 
 const closeEditPhoto = () => {
   uploadFormElem.reset();
@@ -22,15 +24,25 @@ const closeEditPhoto = () => {
   document.removeEventListener('keydown', onEscDown);
 };
 
+const blockSubmitBtn = () => {
+  submitBtnElem.setAttribute('disabled', 'disabled');
+  submitBtnElem.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitBtn = () => {
+  submitBtnElem.removeAttribute('disabled');
+  submitBtnElem.textContent = SubmitButtonText.IDLE;
+};
+
 const onEditFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    // повторная проверка на всякий случай
-    const formData = new FormData(evt.target);
-    sendData(formData)
-      .then(() => showUploadSucces())
-      .then(closeEditPhoto())
-      .catch(() => showUploadError());
+    blockSubmitBtn();
+    sendData(new FormData(evt.target))
+      .then(showUploadSucces)
+      .then(closeEditPhoto)
+      .catch(showUploadError)
+      .finally(unblockSubmitBtn);
   }
 };
 
@@ -38,7 +50,6 @@ const openEditPhoto = () => {
   editImgFormElem.classList.remove('hidden');
   initScale();
   initEffects();
-  // добавить обработку submit для отправки данных формы
   uploadFormElem.addEventListener('submit', onEditFormSubmit);
 };
 
