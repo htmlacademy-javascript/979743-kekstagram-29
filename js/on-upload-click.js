@@ -37,7 +37,7 @@ editImgTags.addEventListener('keydown', (evt) => {
 const onUploadInputChange = () => {
   //открывает форму редактирования, запускает ф-ии для эффектров и масштабирования
   openEditPhoto();
-  editImgForm.classList.remove('hidden');
+  //editImgForm.classList.remove('hidden');
   toggleBodyForPopup();
   editImgCloseBtn.addEventListener('click', onCloseClick);
   document.addEventListener('keydown', onEscDown);
