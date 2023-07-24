@@ -30,4 +30,14 @@ const normalizeTags = (tagStr) =>
     .split(' ')
     .filter((tag) => Boolean(tag.length));
 
-export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEsc, toggleBodyForPopup, normalizeTags };
+const compareNumbers = (a, b) => b.comments.length - a.comments.length; //по убыванию
+
+export {
+  getRandomInteger,
+  getRandomArrayElement,
+  createIdGenerator,
+  isEsc,
+  toggleBodyForPopup,
+  normalizeTags,
+  compareNumbers,
+};

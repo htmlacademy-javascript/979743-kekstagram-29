@@ -94,6 +94,8 @@ const SubmitButtonText = {
   SENDING: 'Публикуем...',
 };
 
+const COUNT_RANDOM_THUMBNAILS = 10;
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -108,4 +110,5 @@ export {
   Url,
   Method,
   SubmitButtonText,
+  COUNT_RANDOM_THUMBNAILS,
 };
