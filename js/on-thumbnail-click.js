@@ -1,13 +1,14 @@
 //вешает прослушку на контейнер с миниатюрами,
 //определяет, где был клиен и какой элемент из массива отдать на отрисовку окна просмотра полной фотографии
 //делает окно видимым
-import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
+
+//import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
 import { fillFullPhoto, closeFullPhoto } from './full-photo.js';
 import { isEsc, toggleBodyForPopup } from './util.js';
 
-const photosContainer = document.querySelector('.pictures');
-const fullPhotoContainer = document.querySelector('.big-picture'); // дублируется в full-photo
-const fullPhotoCloseBtn = fullPhotoContainer.querySelector('.big-picture__cancel');
+const photosContainerElem = document.querySelector('.pictures');
+const fullPhotoContainerElem = document.querySelector('.big-picture'); // дублируется в full-photo
+const fullPhotoCloseBtnElem = fullPhotoContainerElem.querySelector('.big-picture__cancel');
 
 const onCloseClick = () => {
   closeFullPhoto();
@@ -28,18 +29,16 @@ const onThumbnailClick = (evt, data) => {
     const index = data.findIndex((elem) => elem.id === Number(targetElem.id));
     //заполняем данными
     fillFullPhoto(data[index]);
-    fullPhotoContainer.classList.remove('hidden');
+    fullPhotoContainerElem.classList.remove('hidden');
     toggleBodyForPopup();
-    fullPhotoCloseBtn.addEventListener('click', onCloseClick);
+    fullPhotoCloseBtnElem.addEventListener('click', onCloseClick);
     document.addEventListener('keydown', onEscDown);
   }
 };
 
-const addListenerThumbnailsContainer = () => {
-  photosContainer.addEventListener('click', (evt) => {
+const addListenerThumbnailsContainer = (allPhotosData) => {
+  photosContainerElem.addEventListener('click', (evt) => {
     onThumbnailClick(evt, allPhotosData);
-    // fullPhotoCloseBtn.addEventListener('click', onCloseClick);
-    // document.addEventListener('keydown', onEscDown);
   });
 };
 

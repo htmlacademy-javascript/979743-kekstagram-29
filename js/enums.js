@@ -23,6 +23,8 @@ const ErrorText = {
   INVALID_COUNT: `Количество хэштегов не может быть больше ${MAX_HASHTAG_COUNT}`,
   INVALID_PATTERN: 'Хэштег не соответствует правилам',
   NOT_UNIQUE: 'Хэштеги не должны повторяться',
+  GET_DATA: 'Нам очень жаль, но мы не можем сейчас показать Вам фотографии. Мы обязательно скоро все починим',
+  SEND_DATA: 'Нам очень жаль, но мы не можем сейчас загрузить Вашу фотографию. Мы обязательно скоро все починим',
 };
 
 const SCALE = {
@@ -77,6 +79,21 @@ const EFFECTS_STYLES = {
   },
 };
 
+const Url = {
+  GET_DATA: 'https://29.javascript.pages.academy/kekstagram/data',
+  SEND_DATA: 'https://29.javascript.pages.academy/kekstagram',
+};
+
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикуем...',
+};
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -88,4 +105,7 @@ export {
   VALID_SYMBOLS,
   SCALE,
   EFFECTS_STYLES,
+  Url,
+  Method,
+  SubmitButtonText,
 };

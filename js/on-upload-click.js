@@ -2,12 +2,12 @@
 import { isEsc, toggleBodyForPopup } from './util.js';
 import { openEditPhoto, closeEditPhoto } from './edit-photo.js';
 
-const uploadForm = document.querySelector('#upload-select-image');
-const uploadInput = uploadForm.querySelector('.img-upload__input');
-const editImgForm = uploadForm.querySelector('.img-upload__overlay');
-const editImgCloseBtn = editImgForm.querySelector('.img-upload__cancel');
-const editImgComment = editImgForm.querySelector('.text__description');
-const editImgTags = editImgForm.querySelector('.text__hashtags');
+const uploadFormElem = document.querySelector('#upload-select-image');
+const uploadInputElem = uploadFormElem.querySelector('.img-upload__input');
+const editImgFormElem = uploadFormElem.querySelector('.img-upload__overlay');
+const editImgCloseBtnElem = editImgFormElem.querySelector('.img-upload__cancel');
+const editImgCommentElem = editImgFormElem.querySelector('.text__description');
+const editImgTagsElem = editImgFormElem.querySelector('.text__hashtags');
 
 const onEscDown = (evt) => {
   if (isEsc(evt)) {
@@ -26,25 +26,25 @@ const cancelEscDown = (evt) => {
     evt.stopPropagation();
   }
 };
-editImgComment.addEventListener('keydown', (evt) => {
+editImgCommentElem.addEventListener('keydown', (evt) => {
   cancelEscDown(evt);
 });
 
-editImgTags.addEventListener('keydown', (evt) => {
+editImgTagsElem.addEventListener('keydown', (evt) => {
   cancelEscDown(evt);
 });
 
 const onUploadInputChange = () => {
   //открывает форму редактирования, запускает ф-ии для эффектров и масштабирования
   openEditPhoto();
-  editImgForm.classList.remove('hidden');
+  //editImgForm.classList.remove('hidden');
   toggleBodyForPopup();
-  editImgCloseBtn.addEventListener('click', onCloseClick);
+  editImgCloseBtnElem.addEventListener('click', onCloseClick);
   document.addEventListener('keydown', onEscDown);
 };
 
 const addListenerForUpload = () => {
-  uploadInput.addEventListener('change', onUploadInputChange);
+  uploadInputElem.addEventListener('change', onUploadInputChange);
 };
 
 export { addListenerForUpload, onCloseClick, onEscDown };
