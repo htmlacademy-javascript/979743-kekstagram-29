@@ -96,6 +96,8 @@ const SubmitButtonText = {
 
 const COUNT_RANDOM_THUMBNAILS = 10;
 
+const DEBOUNCE_DELAY = 500;
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -111,4 +113,5 @@ export {
   Method,
   SubmitButtonText,
   COUNT_RANDOM_THUMBNAILS,
+  DEBOUNCE_DELAY,
 };

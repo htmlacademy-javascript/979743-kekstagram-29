@@ -1,7 +1,7 @@
 // функции прослушки, обработчики, фильтрация и сортировка миниатюр
 import { allPhotos } from './main.js';
-import { COUNT_RANDOM_THUMBNAILS } from './enums.js';
-import { getRandomInteger, compareNumbers } from './util.js';
+import { COUNT_RANDOM_THUMBNAILS, DEBOUNCE_DELAY } from './enums.js';
+import { getRandomInteger, compareNumbers, debounce } from './util.js';
 import { renderThumbnails, clearThumbnails } from './render-thumbnails.js';
 
 const filtersElem = document.querySelector('.img-filters');
@@ -9,18 +9,20 @@ const filterDefaultElem = document.querySelector('#filter-default');
 const filterRandomElem = document.querySelector('#filter-random');
 const filterDiscussedElem = document.querySelector('#filter-discussed');
 
-const filterDefault = () => {
-  filterDefaultElem.classList.add('img-filters__button--active');
+const chooseFilter = () => {
+  filterDefaultElem.classList.remove('img-filters__button--active');
   filterRandomElem.classList.remove('img-filters__button--active');
   filterDiscussedElem.classList.remove('img-filters__button--active');
   clearThumbnails();
-  renderThumbnails(allPhotos);
+};
+
+const filterDefault = () => {
+  filterDefaultElem.classList.add('img-filters__button--active');
+  return allPhotos;
 };
 
 const filterRandom = () => {
   filterRandomElem.classList.add('img-filters__button--active');
-  filterDefaultElem.classList.remove('img-filters__button--active');
-  filterDiscussedElem.classList.remove('img-filters__button--active');
 
   //делаем выборку 10 случайных
   const randomPhotos = [];
@@ -35,40 +37,34 @@ const filterRandom = () => {
   randomIndexes.forEach((index) => {
     randomPhotos.push(allPhotos[index]);
   });
-  clearThumbnails();
-  renderThumbnails(randomPhotos);
+  return randomPhotos;
 };
 
 const filterDiscussed = () => {
   let discussedPhotos = [];
-
   filterDiscussedElem.classList.add('img-filters__button--active');
-  filterDefaultElem.classList.remove('img-filters__button--active');
-  filterRandomElem.classList.remove('img-filters__button--active');
-
   // сортируем по убыванию
   discussedPhotos = allPhotos.slice().sort(compareNumbers);
-  clearThumbnails();
-  renderThumbnails(discussedPhotos);
+  return discussedPhotos;
 };
 
-const setDefaultFilter = () => {
-  filterDefaultElem.addEventListener('click', filterDefault);
+const filtersFuncsMap = {
+  'filter-default': filterDefault,
+  'filter-random': filterRandom,
+  'filter-discussed': filterDiscussed,
 };
 
-const setRandomFilter = () => {
-  filterRandomElem.addEventListener('click', filterRandom);
-};
-
-const setDiscussedFilter = () => {
-  filterDiscussedElem.addEventListener('click', filterDiscussed);
+const setFiltersClick = () => {
+  filtersElem.addEventListener('click', (evt) => {
+    chooseFilter();
+    const filteredPhotos = filtersFuncsMap[evt.target.id]();
+    renderThumbnails(filteredPhotos);
+  });
 };
 
 const showFilters = () => {
   filtersElem.classList.remove('img-filters--inactive');
-  setDefaultFilter();
-  setRandomFilter();
-  setDiscussedFilter();
+  setFiltersClick(); //вешает прослушку на весь контейнер с фильтрами
 };
 
 export { showFilters };

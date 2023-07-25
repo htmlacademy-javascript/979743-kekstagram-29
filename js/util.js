@@ -9,7 +9,8 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) =>
+  elements[getRandomInteger(0, elements.length - 1)];
 
 const createIdGenerator = () => {
   let lastGeneratedId = 0;
@@ -32,6 +33,14 @@ const normalizeTags = (tagStr) =>
 
 const compareNumbers = (a, b) => b.comments.length - a.comments.length; //по убыванию
 
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 export {
   getRandomInteger,
   getRandomArrayElement,
@@ -40,4 +49,5 @@ export {
   toggleBodyForPopup,
   normalizeTags,
   compareNumbers,
+  debounce,
 };
