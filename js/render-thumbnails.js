@@ -1,7 +1,14 @@
 //отрисовывает все 25 миниатюр; на входе массив с 25-ю объектами
-const thumbnailTemplateElem = document.querySelector('#picture').content.querySelector('.picture'); //содержимое шаблона
+const thumbnailTemplateElem = document
+  .querySelector('#picture')
+  .content.querySelector('.picture'); //содержимое шаблона
 const thumbnailsContainerElem = document.querySelector('.pictures'); //контейнер
 const fragment = document.createDocumentFragment();
+
+const clearThumbnails = () => {
+  const thumbnails = thumbnailsContainerElem.querySelectorAll('.picture');
+  thumbnails.forEach((el) => el.remove());
+};
 
 const renderThumbnail = ({ id, url, description, likes, comments }) => {
   // формируем шаблон для одной миниатюры
@@ -12,12 +19,14 @@ const renderThumbnail = ({ id, url, description, likes, comments }) => {
   newThumbnail.querySelector('.picture__img').src = url;
   newThumbnail.querySelector('.picture__img').alt = description;
   newThumbnail.querySelector('.picture__likes').textContent = likes;
-  newThumbnail.querySelector('.picture__comments').textContent = comments.length;
+  newThumbnail.querySelector('.picture__comments').textContent =
+    comments.length;
   fragment.append(newThumbnail);
 };
 
 const renderThumbnails = (allPhotos) => {
   // allPhotos - это массив
+  clearThumbnails();
   allPhotos.forEach(({ id, url, description, likes, comments }) => {
     renderThumbnail({ id, url, description, likes, comments });
   });
