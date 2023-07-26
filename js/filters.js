@@ -1,5 +1,5 @@
 // функции прослушки, обработчики, фильтрация и сортировка миниатюр
-import { allPhotos } from './main.js';
+// import { allPhotos } from './main.js';
 import { COUNT_RANDOM_THUMBNAILS, DEBOUNCE_DELAY } from './enums.js';
 import { getRandomInteger, compareNumbers, debounce } from './util.js';
 import { renderThumbnails, clearThumbnails } from './render-thumbnails.js';
@@ -16,12 +16,12 @@ const chooseFilter = () => {
   clearThumbnails();
 };
 
-const filterDefault = () => {
+const filterDefault = (allPhotos) => {
   filterDefaultElem.classList.add('img-filters__button--active');
   return allPhotos;
 };
 
-const filterRandom = () => {
+const filterRandom = (allPhotos) => {
   filterRandomElem.classList.add('img-filters__button--active');
 
   //делаем выборку 10 случайных
@@ -40,7 +40,7 @@ const filterRandom = () => {
   return randomPhotos;
 };
 
-const filterDiscussed = () => {
+const filterDiscussed = (allPhotos) => {
   let discussedPhotos = [];
   filterDiscussedElem.classList.add('img-filters__button--active');
   // сортируем по убыванию
@@ -54,17 +54,21 @@ const filtersFuncsMap = {
   'filter-discussed': filterDiscussed,
 };
 
-const setFiltersClick = () => {
+const setFiltersClick = (cb, allPhotos) => {
+  filtersElem.classList.remove('img-filters--inactive');
   filtersElem.addEventListener('click', (evt) => {
     chooseFilter();
-    const filteredPhotos = filtersFuncsMap[evt.target.id]();
-    renderThumbnails(filteredPhotos);
+    const filteredPhotos = filtersFuncsMap[evt.target.id](allPhotos);
+    // renderThumbnails(filteredPhotos);
+    cb(filteredPhotos);
+    // debounce(() => renderThumbnails(filteredPhotos), DEBOUNCE_DELAY);
   });
 };
 
-const showFilters = () => {
-  filtersElem.classList.remove('img-filters--inactive');
-  setFiltersClick(); //вешает прослушку на весь контейнер с фильтрами
-};
+// const showFilters = () => {
+//   filtersElem.classList.remove('img-filters--inactive');
+//   setFiltersClick(); //вешает прослушку на весь контейнер с фильтрами
+// };
 
-export { showFilters };
+// export { showFilters };
+export { setFiltersClick };

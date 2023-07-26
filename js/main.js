@@ -6,7 +6,7 @@ import { getData } from './server.js';
 import { ErrorText } from './enums.js';
 import { renderThumbnails } from './render-thumbnails.js';
 import { addListenerThumbnailsContainer } from './on-thumbnail-click.js';
-import { showFilters } from './filters.js';
+import { setFiltersClick } from './filters.js';
 import { addListenerForUpload } from './on-upload-click.js';
 
 let allPhotos = []; // ??? let экспортируются ???
@@ -18,8 +18,9 @@ getData()
     allPhotos = photosData;
     renderThumbnails(photosData); // отдали данные на отрисовку
     addListenerThumbnailsContainer(photosData);
+    setFiltersClick(renderThumbnails, allPhotos);
   })
-  .then(showFilters)
+  // .then(setFiltersClick)
   .catch(() => {
     showError(ErrorText.GET_DATA);
   });
