@@ -2,8 +2,9 @@
 //import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
 // import { SERVER_URL } from './enums.js';
 import { showError } from './messages.js';
+import { debounce } from './util.js';
 import { getData } from './server.js';
-import { ErrorText } from './enums.js';
+import { ErrorText, DEBOUNCE_DELAY } from './enums.js';
 import { renderThumbnails } from './render-thumbnails.js';
 import { addListenerThumbnailsContainer } from './on-thumbnail-click.js';
 import { setFiltersClick } from './filters.js';
@@ -18,7 +19,7 @@ getData()
     allPhotos = photosData;
     renderThumbnails(photosData); // отдали данные на отрисовку
     addListenerThumbnailsContainer(photosData);
-    setFiltersClick(renderThumbnails, allPhotos);
+    setFiltersClick(debounce(renderThumbnails, DEBOUNCE_DELAY), allPhotos);
   })
   // .then(setFiltersClick)
   .catch(() => {

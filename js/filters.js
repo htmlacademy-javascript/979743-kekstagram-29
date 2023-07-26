@@ -1,8 +1,7 @@
-// функции прослушки, обработчики, фильтрация и сортировка миниатюр
-// import { allPhotos } from './main.js';
-import { COUNT_RANDOM_THUMBNAILS, DEBOUNCE_DELAY } from './enums.js';
-import { getRandomInteger, compareNumbers, debounce } from './util.js';
-import { renderThumbnails, clearThumbnails } from './render-thumbnails.js';
+// функция прослушки, обработчики, фильтрация и сортировка миниатюр
+
+import { COUNT_RANDOM_THUMBNAILS } from './enums.js';
+import { getRandomInteger, compareNumbers } from './util.js';
 
 const filtersElem = document.querySelector('.img-filters');
 const filterDefaultElem = document.querySelector('#filter-default');
@@ -13,7 +12,6 @@ const chooseFilter = () => {
   filterDefaultElem.classList.remove('img-filters__button--active');
   filterRandomElem.classList.remove('img-filters__button--active');
   filterDiscussedElem.classList.remove('img-filters__button--active');
-  clearThumbnails();
 };
 
 const filterDefault = (allPhotos) => {
@@ -59,16 +57,8 @@ const setFiltersClick = (cb, allPhotos) => {
   filtersElem.addEventListener('click', (evt) => {
     chooseFilter();
     const filteredPhotos = filtersFuncsMap[evt.target.id](allPhotos);
-    // renderThumbnails(filteredPhotos);
     cb(filteredPhotos);
-    // debounce(() => renderThumbnails(filteredPhotos), DEBOUNCE_DELAY);
   });
 };
 
-// const showFilters = () => {
-//   filtersElem.classList.remove('img-filters--inactive');
-//   setFiltersClick(); //вешает прослушку на весь контейнер с фильтрами
-// };
-
-// export { showFilters };
 export { setFiltersClick };
