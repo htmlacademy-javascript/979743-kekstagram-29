@@ -10,16 +10,16 @@ import { addListenerThumbnailsContainer } from './on-thumbnail-click.js';
 import { setFiltersClick } from './filters.js';
 import { addListenerForUpload } from './on-upload-click.js';
 
-let allPhotos = []; // ??? let экспортируются ???
+// let allPhotos = []; // ??? let экспортируются ???
 
 //из server возвращаем промис, который отдает данные
 //потом then и в нем функции отрисовки и прослушки
 getData()
   .then((photosData) => {
-    allPhotos = photosData;
+    // allPhotos = photosData;
     renderThumbnails(photosData); // отдали данные на отрисовку
     addListenerThumbnailsContainer(photosData);
-    setFiltersClick(debounce(renderThumbnails, DEBOUNCE_DELAY), allPhotos);
+    setFiltersClick(debounce(renderThumbnails, DEBOUNCE_DELAY), photosData);
   })
   // .then(setFiltersClick)
   .catch(() => {
@@ -28,4 +28,4 @@ getData()
 
 addListenerForUpload(); //если фотографии не загрузились, все равно вызывается
 
-export { allPhotos };
+// export { allPhotos };

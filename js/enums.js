@@ -98,6 +98,8 @@ const COUNT_RANDOM_THUMBNAILS = 10;
 
 const DEBOUNCE_DELAY = 500;
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 export {
   PHOTOS_COUNT,
   LIKES_COUNT,
@@ -114,4 +116,5 @@ export {
   SubmitButtonText,
   COUNT_RANDOM_THUMBNAILS,
   DEBOUNCE_DELAY,
+  FILE_TYPES,
 };
