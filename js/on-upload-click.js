@@ -11,6 +11,7 @@ const editImgCommentElem = editImgFormElem.querySelector('.text__description');
 const editImgTagsElem = editImgFormElem.querySelector('.text__hashtags');
 const previewContainerElem = document.querySelector('.img-upload__preview');
 const previewPictureElem = previewContainerElem.querySelector('.img-upload__preview img');
+const previewEffectsElem = document.querySelectorAll('.effects__preview');
 
 const onEscDown = (evt) => {
   if (isEsc(evt)) {
@@ -41,10 +42,12 @@ const choosePicrures = () => {
   previewPictureElem.src = ''; // чтобы не показывалось изоб по умолчанию или предыдущее
   previewContainerElem.style.backgroundColor = 'transparent';
   const file = uploadInputElem.files[0];
-  // const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => file.name.toLowerCase().endsWith(it));
   if (matches) {
     previewPictureElem.src = URL.createObjectURL(file);
+    previewEffectsElem.forEach((item) => {
+      item.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
   }
 };
 
