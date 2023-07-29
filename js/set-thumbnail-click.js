@@ -2,7 +2,6 @@
 //определяет, где был клиен и какой элемент из массива отдать на отрисовку окна просмотра полной фотографии
 //делает окно видимым
 
-//import { allPhotosData } from './data.js'; //получаем массив из 25 объектов
 import { fillFullPhoto, closeFullPhoto } from './full-photo.js';
 import { isEsc, toggleBodyForPopup } from './util.js';
 
@@ -36,10 +35,10 @@ const onThumbnailClick = (evt, data) => {
   }
 };
 
-const addListenerThumbnailsContainer = (allPhotosData) => {
+const setThumbnailsContainerClick = (allPhotosData) => {
   photosContainerElem.addEventListener('click', (evt) => {
     onThumbnailClick(evt, allPhotosData);
   });
 };
 
-export { addListenerThumbnailsContainer, onCloseClick, onEscDown };
+export { setThumbnailsContainerClick, onCloseClick, onEscDown };

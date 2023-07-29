@@ -1,4 +1,5 @@
 // обрабатывает change на инпуте, открывает и закрывает форму для загрузки изображения
+
 import { isEsc, toggleBodyForPopup } from './util.js';
 import { openEditPhoto, closeEditPhoto } from './edit-photo.js';
 import { FILE_TYPES } from './enums.js';
@@ -54,7 +55,7 @@ const choosePicrures = () => {
 const onUploadInputChange = () => {
   // даем пользователю выбрать файл
   choosePicrures();
-  //открывает форму редактирования, запускает ф-ии для эффектров и масштабирования
+  //открываем форму редактирования, запускает ф-ии для эффектров и масштабирования
   openEditPhoto();
   //editImgForm.classList.remove('hidden');
   toggleBodyForPopup();
@@ -62,8 +63,8 @@ const onUploadInputChange = () => {
   document.addEventListener('keydown', onEscDown);
 };
 
-const addListenerForUpload = () => {
+const setUploadClick = () => {
   uploadInputElem.addEventListener('change', onUploadInputChange);
 };
 
-export { addListenerForUpload, onCloseClick, onEscDown };
+export { setUploadClick, onCloseClick, onEscDown };

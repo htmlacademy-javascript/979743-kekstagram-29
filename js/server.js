@@ -1,4 +1,5 @@
 //загружает данные с сервера и на сервер, обрабатывает ошибки; возвращает промисы
+
 import { Url, Method, ErrorText } from './enums.js';
 
 const load = (url, errorText, method = Method.GET, body = null) =>

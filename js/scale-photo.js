@@ -1,4 +1,5 @@
 // вешает обработчики на + и - для масштаба фото; манипулирует стилями для изменения масштаба
+
 import { SCALE } from './enums.js';
 
 const scaleIncreaseElem = document.querySelector('.scale__control--bigger');
