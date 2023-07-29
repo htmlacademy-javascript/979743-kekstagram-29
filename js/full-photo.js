@@ -2,7 +2,7 @@
 // на входе - объект, соответствующей кликнутой миниатюре
 import { toggleBodyForPopup } from './util.js';
 import { COMMENTS_PORTION } from './enums.js';
-import { onCloseClick, onEscDown } from './on-thumbnail-click.js';
+import { onCloseClick, onEscDown } from './set-thumbnail-click.js';
 
 const fullPhotoContainerElem = document.querySelector('.big-picture'); //дублируется в on-thumbnail-click
 const imgElem = fullPhotoContainerElem.querySelector('.big-picture__img img');

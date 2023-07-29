@@ -3,7 +3,7 @@ import { toggleBodyForPopup } from './util.js';
 import { SubmitButtonText } from './enums.js';
 import { showUploadSucces, showUploadError } from './messages.js';
 import { pristine } from './validation.js';
-import { onCloseClick, onEscDown } from './on-upload-click.js';
+import { onCloseClick, onEscDown } from './set-upload-click.js';
 import { initScale, resetScale } from './scale-photo.js';
 import { initEffects, resetEffects } from './effects.js';
 import { sendData } from './server.js';
