@@ -6,9 +6,9 @@ import { debounce } from './util.js';
 import { getData } from './server.js';
 import { ErrorText, DEBOUNCE_DELAY } from './enums.js';
 import { renderThumbnails } from './render-thumbnails.js';
-import { addListenerThumbnailsContainer } from './on-thumbnail-click.js';
+import { setThumbnailsContainerClick } from './set-thumbnail-click.js';
 import { setFiltersClick } from './filters.js';
-import { addListenerForUpload } from './on-upload-click.js';
+import { setUploadClick } from './set-upload-click.js';
 
 // let allPhotos = []; // ??? let экспортируются ???
 
@@ -18,7 +18,7 @@ getData()
   .then((photosData) => {
     // allPhotos = photosData;
     renderThumbnails(photosData); // отдали данные на отрисовку
-    addListenerThumbnailsContainer(photosData);
+    setThumbnailsContainerClick(photosData);
     setFiltersClick(debounce(renderThumbnails, DEBOUNCE_DELAY), photosData);
   })
   // .then(setFiltersClick)
@@ -26,6 +26,6 @@ getData()
     showError(ErrorText.GET_DATA);
   });
 
-addListenerForUpload(); //если фотографии не загрузились, все равно вызывается
+setUploadClick(); //если фотографии не загрузились, все равно вызывается
 
 // export { allPhotos };

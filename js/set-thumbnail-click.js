@@ -36,10 +36,10 @@ const onThumbnailClick = (evt, data) => {
   }
 };
 
-const addListenerThumbnailsContainer = (allPhotosData) => {
+const setThumbnailsContainerClick = (allPhotosData) => {
   photosContainerElem.addEventListener('click', (evt) => {
     onThumbnailClick(evt, allPhotosData);
   });
 };
 
-export { addListenerThumbnailsContainer, onCloseClick, onEscDown };
+export { setThumbnailsContainerClick, onCloseClick, onEscDown };

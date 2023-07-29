@@ -62,8 +62,8 @@ const onUploadInputChange = () => {
   document.addEventListener('keydown', onEscDown);
 };
 
-const addListenerForUpload = () => {
+const setUploadClick = () => {
   uploadInputElem.addEventListener('change', onUploadInputChange);
 };
 
-export { addListenerForUpload, onCloseClick, onEscDown };
+export { setUploadClick, onCloseClick, onEscDown };
