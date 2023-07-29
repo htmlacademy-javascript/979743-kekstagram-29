@@ -1,5 +1,6 @@
 // формирование окна полноразмерной фотографии и подробной информации
 // на входе - объект, соответствующей кликнутой миниатюре
+
 import { toggleBodyForPopup } from './util.js';
 import { COMMENTS_PORTION } from './enums.js';
 import { onCloseClick, onEscDown } from './set-thumbnail-click.js';
@@ -19,10 +20,10 @@ const fragment = document.createDocumentFragment(); // для коментов
 
 // для дозагрузки комментов
 let currentComments = [];
-let commentsPortionCounter = 1; //глобальные переменные, я не придумала, как без них обойтись
+let commentsPortionCounter = 1;
 
 const renderComment = ({ avatar, message }) => {
-  // отрисовывает один комментарий
+  // отрисовываем один комментарий
   const newComment = fullPhotoCommentsItemElem.cloneNode(true);
   newComment.querySelector('.social__picture').src = avatar;
   newComment.querySelector('.social__text').textContent = message;

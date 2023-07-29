@@ -9,8 +9,7 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) =>
-  elements[getRandomInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const createIdGenerator = () => {
   let lastGeneratedId = 0;
@@ -21,6 +20,7 @@ const createIdGenerator = () => {
 };
 
 const isEsc = (evt) => evt.key === 'Escape';
+
 //переключатель класса для body при открытии модальных окон
 const toggleBodyForPopup = () => bodyElem.classList.toggle('modal-open');
 
